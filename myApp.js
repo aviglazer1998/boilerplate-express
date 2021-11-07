@@ -1,5 +1,6 @@
 var express = require("express");
 var app = express();
+require("dotenv").config();
 
 console.log("Hello World");
 
@@ -9,6 +10,19 @@ app.get("/", function (req, res) {
 
 app.use(express.static(__dirname + "/public"));
 
-// Assets at the /public route
 app.use("/public", express.static(__dirname + "/public"));
+
+app.get("/json", (req, res) => {
+	var response = "Hello json".toUpperCase();
+
+	if (process.env.VAR_NAME === "uppercase") {
+		response = "Hello josn".toUpperCase();
+	} else {
+		response = "Hello json";
+	}
+	res.json({
+		message: response,
+	});
+});
+
 module.exports = app;
